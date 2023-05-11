@@ -1,0 +1,6 @@
+[Unit]
+Description=custom metrics job
+
+[Service]
+Type=oneshot
+ExecStart=python3 /home/ubuntu/script.py

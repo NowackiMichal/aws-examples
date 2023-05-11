@@ -1,0 +1,8 @@
+[Unit]
+Description=custom metrics job timer
+
+[Timer]
+OnCalendar=*:1/1
+
+[Install]
+WantedBy=timers.target

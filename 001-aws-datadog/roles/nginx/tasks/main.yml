@@ -1,0 +1,13 @@
+---
+- name: apt update
+  apt:
+    update_cache: yes
+    state: latest
+- name: ensure nginx is at the latest version
+  apt:
+    name: nginx
+    state: latest
+- name: Make sure nginx is running
+  systemd:
+    state: started
+    name: nginx

@@ -1,0 +1,12 @@
+---
+- name: Install Nginx and Php-fm
+  hosts: all
+  become: true
+  remote_user: ubuntu
+  roles:
+    - nginx
+    - php-fpm
+    - script
+  vars:
+    datadog_api_key: "<YOUR_API_KEY>"
+    datadog_site: "datadoghq.eu"

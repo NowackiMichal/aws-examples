@@ -1,0 +1,29 @@
+- name: Install pip3
+  apt:
+    name: python3-pip
+    state: present
+- name: Install datadog python package
+  pip:
+    name: datadog
+- name: install datadog agent
+  script: datadog.sh
+  become: yes
+- name: Upload custom metrics
+  copy:
+    src: "script.py"
+    dest: "script.py"
+- name: Upload custom service
+  copy:
+    src: "custom.service"
+    dest: "/etc/systemd/system/custom.service"
+- name: Upload custom timer
+  copy:
+    src: "custom.timer"
+    dest: "/etc/systemd/system/custom.timer"
+- name: Systemd reload
+  systemd:
+    daemon_reload: true
+- name: Start custom service
+  systemd:
+    name: custom.timer
+    state: started
