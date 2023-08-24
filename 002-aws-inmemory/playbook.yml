@@ -1,0 +1,44 @@
+---
+- name: Install Redis
+  hosts: all
+  become: true
+  remote_user: ubuntu
+  vars:
+    redis_port: 6379
+  tasks:
+    - name: apt update
+      apt:
+        update_cache: yes
+        force_apt_get: yes
+    - name: Add redis stable repository from PPA
+      apt_repository:
+        repo: ppa:redislabs/redis    
+    - name: Ensure Redis is present
+      apt:
+        name: redis-server
+        state: present    
+    - name: Ensure Redis is started
+      service: name=redis-server state=started enabled=yes
+    - name: Set up Redis authentication
+      lineinfile:
+        dest: /etc/redis/redis.conf
+        regexp: '^#?\s*requirepass\s*'
+        line: "requirepass {{redis_pass}}"
+      notify:
+        - Restart Redis      
+    - name: Enable remote access in Redis
+      lineinfile:
+        dest: /etc/redis/redis.conf
+        regexp: '^bind\s+127.0.0.1'
+        line: 'bind 0.0.0.0'
+      notify:
+        - Restart Redis    
+    - name: Create User Nebo
+      lineinfile:
+        path: /etc/redis/redis.conf
+        line: "user nebo on >{{nebo_pass}} ~* +@read +@write"     
+  handlers:
+    - name: Restart Redis
+      service:
+        name: redis-server
+        state: restarted        
