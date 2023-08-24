@@ -45,14 +45,14 @@ resource "aws_security_group" "my_security_group" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # You might want to restrict this to specific IPs or ranges
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
     from_port   = 6379
     to_port     = 6379
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # You might want to restrict this to specific IPs or ranges
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
