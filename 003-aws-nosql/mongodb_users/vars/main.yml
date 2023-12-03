@@ -1,0 +1,8 @@
+---
+database_name: "nebo-task"
+
+mongodb_root_user: "root"
+mongodb_root_password: "root1234"
+
+mongodb_nebo_user: "nebo"
+mongodb_nebo_password: "nebo123"
