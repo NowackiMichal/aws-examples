@@ -1,0 +1,8 @@
+---
+- name: Install and configure MongoDB on Ubuntu 20.04 
+  hosts: all
+  remote_user: ubuntu
+  become: true
+  roles:
+    - mongodb
+    - mongodb_users
