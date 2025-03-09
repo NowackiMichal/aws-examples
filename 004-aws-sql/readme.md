@@ -118,7 +118,7 @@ Aggregation:
 
 Behavior: Only includes customers with orders (due to INNER JOINs).
 
-## Query 4: All Products and Their Order History (RIGHT JOIN Alternative as LEFT JOIN)
+## Query 4: All Products and Their Order History
 
 ```sql
 SELECT 
