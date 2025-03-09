@@ -32,8 +32,9 @@ SELECT
 FROM Orders o
 INNER JOIN Customers c ON o.customer_id = c.customer_id
 INNER JOIN Order_Items oi ON o.order_id = oi.order_id
-INNER JOIN Products p ON oi.product_id = p.product_id;```
-
+INNER JOIN Products p ON oi.product_id = p.product_id;
+```
+```bash
 +----------+------------+-----------+--------------+----------+--------+------------+
 | order_id | first_name | last_name | product_name | quantity | price  | total_cost |
 +----------+------------+-----------+--------------+----------+--------+------------+
@@ -41,6 +42,7 @@ INNER JOIN Products p ON oi.product_id = p.product_id;```
 |        1 | John       | Doe       | Mouse        |        2 |  19.99 |      39.98 |
 |        2 | Jane       | Smith     | Keyboard     |        1 |  49.99 |      49.99 |
 +----------+------------+-----------+--------------+----------+--------+------------+
+```
 
 Purpose: Retrieves detailed information about all orders, including customer names, product names, quantities, prices, and the total cost per item.
 JOINs:
@@ -61,15 +63,16 @@ SELECT
     o.order_id,
     o.order_date
 FROM Customers c
-LEFT JOIN Orders o ON c.customer_id = o.customer_id;```
-
+LEFT JOIN Orders o ON c.customer_id = o.customer_id;
+```
+```bash
 +-------------+------------+-----------+----------+------------+
 | customer_id | first_name | last_name | order_id | order_date |
 +-------------+------------+-----------+----------+------------+
 |           1 | John       | Doe       |        1 | 2025-03-01 |
 |           2 | Jane       | Smith     |        2 | 2025-03-02 |
 +-------------+------------+-----------+----------+------------+
-
+```
 
 Purpose: Lists all customers and their orders, including customers who haven’t placed any orders.
 JOIN:
@@ -92,12 +95,14 @@ INNER JOIN Order_Items oi ON o.order_id = oi.order_id
 INNER JOIN Products p ON oi.product_id = p.product_id
 GROUP BY c.customer_id, o.order_id;
 ```
+```bash
 +------------+-----------+----------+-------------+
 | first_name | last_name | order_id | order_total |
 +------------+-----------+----------+-------------+
 | John       | Doe       |        1 |     1039.97 |
 | Jane       | Smith     |        2 |       49.99 |
 +------------+-----------+----------+-------------+
+```
 
 Purpose: Calculates the total value of each order, aggregated by customer and order.
 JOINs:
@@ -124,6 +129,7 @@ SELECT
 FROM Products p
 LEFT JOIN Order_Items oi ON p.product_id = oi.product_id;
 ```
+```bash
 +--------------+--------+----------+----------+
 | product_name | price  | order_id | quantity |
 +--------------+--------+----------+----------+
@@ -131,6 +137,7 @@ LEFT JOIN Order_Items oi ON p.product_id = oi.product_id;
 | Mouse        |  19.99 |        1 |        2 |
 | Keyboard     |  49.99 |        2 |        1 |
 +--------------+--------+----------+----------+
+```
 
 Purpose: Lists all products and their order history, including products that haven’t been ordered.
 JOIN:
