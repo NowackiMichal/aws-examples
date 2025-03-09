@@ -32,7 +32,7 @@ SELECT
 FROM Orders o
 INNER JOIN Customers c ON o.customer_id = c.customer_id
 INNER JOIN Order_Items oi ON o.order_id = oi.order_id
-INNER JOIN Products p ON oi.product_id = p.product_id;
+INNER JOIN Products p ON oi.product_id = p.product_id;```
 
 +----------+------------+-----------+--------------+----------+--------+------------+
 | order_id | first_name | last_name | product_name | quantity | price  | total_cost |
@@ -61,7 +61,7 @@ SELECT
     o.order_id,
     o.order_date
 FROM Customers c
-LEFT JOIN Orders o ON c.customer_id = o.customer_id;
+LEFT JOIN Orders o ON c.customer_id = o.customer_id;```
 
 +-------------+------------+-----------+----------+------------+
 | customer_id | first_name | last_name | order_id | order_date |
@@ -91,7 +91,7 @@ INNER JOIN Orders o ON c.customer_id = o.customer_id
 INNER JOIN Order_Items oi ON o.order_id = oi.order_id
 INNER JOIN Products p ON oi.product_id = p.product_id
 GROUP BY c.customer_id, o.order_id;
-
+```
 +------------+-----------+----------+-------------+
 | first_name | last_name | order_id | order_total |
 +------------+-----------+----------+-------------+
@@ -123,7 +123,7 @@ SELECT
     oi.quantity
 FROM Products p
 LEFT JOIN Order_Items oi ON p.product_id = oi.product_id;
-
+```
 +--------------+--------+----------+----------+
 | product_name | price  | order_id | quantity |
 +--------------+--------+----------+----------+
