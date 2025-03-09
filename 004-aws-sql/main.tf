@@ -131,6 +131,73 @@ resource "aws_instance" "ec2_instance" {
     tags = {
         Name = "nebo-task-ec2-${count.index}"
     }
+    user_data = <<EOF
+#!/bin/bash
+# Update package list and install MySQL client
+apt-get update -y
+apt-get install -y mysql-client
+
+# Wait for RDS to be available (simple delay, improve with a proper check if needed)
+sleep 60
+
+# SQL script to initialize the database
+cat << 'SQL' > /tmp/init.sql
+CREATE TABLE Customers (
+    customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100)
+);
+
+CREATE TABLE Products (
+    product_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_name VARCHAR(100),
+    price DECIMAL(10, 2)
+);
+
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT,
+    order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+);
+
+CREATE TABLE Order_Items (
+    order_item_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+);
+
+INSERT INTO Customers (first_name, last_name, email) VALUES
+('John', 'Doe', 'john.doe@email.com'),
+('Jane', 'Smith', 'jane.smith@email.com');
+
+INSERT INTO Products (product_name, price) VALUES
+('Laptop', 999.99),
+('Mouse', 19.99),
+('Keyboard', 49.99);
+
+INSERT INTO Orders (customer_id, order_date) VALUES
+(1, '2025-03-01'),
+(2, '2025-03-02');
+
+INSERT INTO Order_Items (order_id, product_id, quantity) VALUES
+(1, 1, 1),
+(1, 2, 2),
+(2, 3, 1);
+SQL
+
+# Execute the SQL script
+mysql -h ${aws_db_instance.db.address} -u ${aws_db_instance.db.username} -p${aws_db_instance.db.password} ${aws_db_instance.db.db_name} < /tmp/init.sql
+
+# Clean up
+rm /tmp/init.sql
+EOF
+
+  depends_on = [aws_db_instance.db]
 }
 
 resource "aws_eip" "ec2_eip" {
