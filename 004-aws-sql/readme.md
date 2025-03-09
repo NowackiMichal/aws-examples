@@ -20,7 +20,6 @@ The sample data includes:
 
 ## Query 1: All Orders with Customer and Product Details
 
-### Query
 ```sql
 SELECT 
     o.order_id,
@@ -35,7 +34,6 @@ INNER JOIN Customers c ON o.customer_id = c.customer_id
 INNER JOIN Order_Items oi ON o.order_id = oi.order_id
 INNER JOIN Products p ON oi.product_id = p.product_id;
 
-'''bash
 +----------+------------+-----------+--------------+----------+--------+------------+
 | order_id | first_name | last_name | product_name | quantity | price  | total_cost |
 +----------+------------+-----------+--------------+----------+--------+------------+
@@ -55,7 +53,6 @@ Behavior: Only includes rows where all joins succeed (completed orders with item
 
 ## Query 2: All Customers and Their Orders (LEFT JOIN)
 
-### Query
 ```sql
 SELECT 
     c.customer_id,
@@ -66,7 +63,6 @@ SELECT
 FROM Customers c
 LEFT JOIN Orders o ON c.customer_id = o.customer_id;
 
-'''bash
 +-------------+------------+-----------+----------+------------+
 | customer_id | first_name | last_name | order_id | order_date |
 +-------------+------------+-----------+----------+------------+
@@ -84,7 +80,6 @@ Behavior: Ensures every customer appears in the result, even those without order
 
 ## Query 3: Total Order Value per Customer
 
-### Query
 ```sql
 SELECT 
     c.first_name,
@@ -97,7 +92,6 @@ INNER JOIN Order_Items oi ON o.order_id = oi.order_id
 INNER JOIN Products p ON oi.product_id = p.product_id
 GROUP BY c.customer_id, o.order_id;
 
-'''bash
 +------------+-----------+----------+-------------+
 | first_name | last_name | order_id | order_total |
 +------------+-----------+----------+-------------+
@@ -121,7 +115,6 @@ Behavior: Only includes customers with orders (due to INNER JOINs).
 
 ## Query 4: All Products and Their Order History (RIGHT JOIN Alternative as LEFT JOIN)
 
-### Query
 ```sql
 SELECT 
     p.product_name,
@@ -131,7 +124,6 @@ SELECT
 FROM Products p
 LEFT JOIN Order_Items oi ON p.product_id = oi.product_id;
 
-'''bash
 +--------------+--------+----------+----------+
 | product_name | price  | order_id | quantity |
 +--------------+--------+----------+----------+
