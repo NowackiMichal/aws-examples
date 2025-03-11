@@ -14,13 +14,13 @@ This project sets up AWS RDS, PostgreSQL and migrate DB from RDS to PostgreSQL.
 
 ```bash
 mysqldump -u nebo -p -h <DB_ENDPOINT> --no-tablespaces --single-transaction --set-gtid-purged=OFF --column-statistics=0 --compatible=ansi nebotask > nebotask_db_mysql.sql
-
 ```
-
+```bash
 root@ip-10-0-1-27:/home/ubuntu# pgloader /home/ubuntu/nebotask_db_mysql.sql postgresql://<USER>:<PASSWORD>@localhost/<DB_NAME>
 2025-03-10T14:56:01.016000Z LOG pgloader version "3.6.3~devel"
 ```
-```
+
+```bash
 postgres=# \c nebo_db
 You are now connected to database "nebo_db" as user "postgres".
 nebo_db=# \dt
